@@ -6,6 +6,20 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Fix: solid floor, raised walls for lid recess
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Fix tray — solid floor, raised walls for lid recess`
+
+**What changed:**
+- Holes now start at `z = floor_t = 2mm` (were starting at z=0, punching through the floor). Height = `round_depth + 0.02 = 20mm`. Solid 2mm floor is intact.
+- Added `lid_t = 3` parameter. `tray_h` updated to `floor_t + round_depth + shelf_t + lid_t + 0.3 = 27.3mm`. Top 5.3mm of walls (shelf_t + lid_t + 0.3) form the raised lip the lid slots into. Lid channel stays at the very top of those walls.
+- Hole zone: z=2 to z=22 (20mm). Raised lip zone: z=22 to z=27.3 (5.3mm). Lid channel: z=24.3 to z=27.3 (3mm, inside face of long walls).
+
+---
+
 ## 2026-05-25 — Ammo Box — Tray Redesign: solid body, full-height holes, lid channel
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`

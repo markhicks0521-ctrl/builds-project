@@ -2,6 +2,7 @@ wall      = 2;
 floor_t   = 2;
 shelf_t   = 2;
 round_depth = 20;
+lid_t     = 3;
 hole_d    = 9.5;
 cols      = 5;
 rows      = 10;
@@ -9,7 +10,7 @@ rows      = 10;
 cell   = hole_d + wall;
 tray_w = cols * cell + wall * 2;
 tray_l = rows * cell + wall * 2;
-tray_h = floor_t + round_depth + shelf_t;
+tray_h = floor_t + round_depth + shelf_t + lid_t + 0.3;  // 27.3mm; top 5.3mm = raised lip
 
 $fn = 48;
 
@@ -17,15 +18,15 @@ module ammo_tray() {
     difference() {
         cube([tray_w, tray_l, tray_h]);
 
-        // 50 through-holes — full height, no bridging
+        // 50 holes — floor_t to floor_t+round_depth, solid floor beneath
         for (c = [0:cols-1]) {
             for (r = [0:rows-1]) {
                 translate([
                     wall + c * cell + cell/2,
                     wall + r * cell + cell/2,
-                    -0.01
+                    floor_t - 0.01
                 ])
-                    cylinder(d=hole_d, h=tray_h + 0.02);
+                    cylinder(d=hole_d, h=round_depth + 0.02);
             }
         }
 
