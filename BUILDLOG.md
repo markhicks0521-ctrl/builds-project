@@ -6,6 +6,16 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-24 — Ammo Box Step 1: clean base geometry for test print
+
+**Modified:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Committed:** `Step 1 — clean base geometry for test print`
+
+**Notes:** Full rewrite, stripped to bare minimum. Tray: solid box, hollowed interior above floor, 50 rim-hang holes through shelf only. Lid: flat 3mm plate, no features. Previous over-engineered version (detents, hard stop, rail grooves, deboss) scrapped in favour of test-print-first approach.
+
+---
+
 ## 2026-05-24 — Ammo Box Redesign: solid floor, rim-hang, lid retention
 
 **Modified:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
