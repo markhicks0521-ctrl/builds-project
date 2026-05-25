@@ -6,6 +6,32 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Tray Redesign: solid body, full-height holes, lid channel
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Tray redesign — solid with full height holes, lid channel added`
+
+**What changed:**
+- Tray is now a fully solid block — hollow interior cutout removed entirely. Eliminates all bridging; prints reliably.
+- 50 holes now run the full tray height (24mm), top to bottom. No shelf layer, no hollow pocket.
+- Lid channel added: 3mm tall × 1.5mm deep, cut into the inside face of both long walls (X-axis walls), at z = tray_h−3 to z = tray_h. Channel runs full tray_l length. This is where the lid tongue will slide in from the long side.
+- Side-by-side preview render re-enabled (tray + lid).
+- All parameters unchanged: hole_d=9.5, wall=2, floor_t=2, shelf_t=2, round_depth=20, tray dims 61.5×119×24mm.
+
+**Design decisions:**
+- Full-height holes: since there is no hollow cavity, the vertical walls between holes provide all structural strength. No bridging at any layer.
+- Channel depth 1.5mm into 2mm wall: 0.5mm remaining outer skin — intentional, this is the lid-retention groove; wall integrity comes from the solid body, not the wall skin above the channel.
+
+**Next session:**
+- Check test print (if sent), verify round fit
+- Design lid tongue to match channel (3mm tall × 1.5mm wide projection on lid edges)
+- Add detent and hard stop to lid tongue/channel system
+- Consider debossed lid graphics
+
+---
+
 ## 2026-05-24 — Ammo Box — 9mm 50rd Tray Design and Test Print
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`, `3dprints/ammo-boxes/9mm_50rd_tray.stl` (exported for print)

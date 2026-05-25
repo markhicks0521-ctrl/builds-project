@@ -17,21 +17,23 @@ module ammo_tray() {
     difference() {
         cube([tray_w, tray_l, tray_h]);
 
-        // hollow interior above floor
-        translate([wall, wall, floor_t])
-            cube([tray_w - wall*2, tray_l - wall*2, round_depth]);
-
-        // rim-hang holes punched down through shelf only
+        // 50 through-holes — full height, no bridging
         for (c = [0:cols-1]) {
             for (r = [0:rows-1]) {
                 translate([
                     wall + c * cell + cell/2,
                     wall + r * cell + cell/2,
-                    tray_h - shelf_t - 0.01
+                    -0.01
                 ])
-                    cylinder(d=hole_d, h=shelf_t + 0.02);
+                    cylinder(d=hole_d, h=tray_h + 0.02);
             }
         }
+
+        // lid channel — inside face of both long walls (X walls), top 3mm
+        translate([wall - 1.5, 0, tray_h - 3])
+            cube([1.5, tray_l, 3]);
+        translate([tray_w - wall, 0, tray_h - 3])
+            cube([1.5, tray_l, 3]);
     }
 }
 
