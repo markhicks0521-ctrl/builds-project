@@ -10,7 +10,7 @@ rows      = 10;
 cell   = hole_d + wall;
 tray_w = cols * cell + wall * 2;
 tray_l = rows * cell + wall * 2;
-tray_h = floor_t + round_depth + shelf_t + lid_t + 0.3;  // 27.3mm; top 5.3mm = raised lip
+tray_h = floor_t + round_depth + lid_t + 0.3;  // 25.3mm
 
 $fn = 48;
 
@@ -31,10 +31,10 @@ module ammo_tray() {
         }
 
         // lid channel — inside face of both long walls (X walls), top 3mm
-        translate([wall - 1.5, 0, tray_h - 3])
-            cube([1.5, tray_l, 3]);
-        translate([tray_w - wall, 0, tray_h - 3])
-            cube([1.5, tray_l, 3]);
+        translate([wall, 0, tray_h - 3])
+            cube([1.5, tray_l, 3.01]);
+        translate([tray_w - wall - 1.5, 0, tray_h - 3])
+            cube([1.5, tray_l, 3.01]);
     }
 }
 
