@@ -1,45 +1,40 @@
-wall      = 2;
-floor_t   = 2;
-shelf_t   = 2;
+wall = 2;
+floor_t = 2;
 round_depth = 20;
-lid_t     = 3;
-hole_d    = 9.5;
-cols      = 5;
-rows      = 10;
-
-cell   = hole_d + wall;
-tray_w = cols * cell + wall * 2;
-tray_l = rows * cell + wall * 2;
-tray_h = floor_t + round_depth + lid_t + 0.3;  // 25.3mm
-
+lid_t = 3;
+hole_d = 9.5;
+cols = 5;
+rows = 10;
+cell = 11.5;
+tray_w = 61.5;
+tray_l = 119;
+tray_h = 25.3;
+ch_depth = 1.5;
+ch_h = 3;
 $fn = 48;
 
 module ammo_tray() {
     difference() {
         cube([tray_w, tray_l, tray_h]);
-
-        // 50 holes — floor_t to floor_t+round_depth, solid floor beneath
-        for (c = [0:cols-1]) {
-            for (r = [0:rows-1]) {
+        for (c = [0:4]) {
+            for (r = [0:9]) {
                 translate([
-                    wall + c * cell + cell/2,
-                    wall + r * cell + cell/2,
-                    floor_t - 0.01
+                    2 + c * 11.5 + 5.75,
+                    2 + r * 11.5 + 5.75,
+                    1.99
                 ])
-                    cylinder(d=hole_d, h=round_depth + 0.02);
+                cylinder(d=9.5, h=20.02);
             }
         }
-
-        // lid channel — inside face of both long walls (X walls), top 3mm
-        translate([wall, 0, tray_h - 3])
-            cube([1.5, tray_l, 3.01]);
-        translate([tray_w - wall - 1.5, 0, tray_h - 3])
-            cube([1.5, tray_l, 3.01]);
+        translate([2, 0, 22.3])
+            cube([1.5, 119, 3.01]);
+        translate([58, 0, 22.3])
+            cube([1.5, 119, 3.01]);
     }
 }
 
 module ammo_lid() {
-    cube([tray_w, tray_l, 3]);
+    cube([tray_w, tray_l, lid_t]);
 }
 
 ammo_tray();
