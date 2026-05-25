@@ -19,7 +19,7 @@ module ammo_tray() {
 
         // hollow interior above floor
         translate([wall, wall, floor_t])
-            cube([tray_w - wall*2, tray_l - wall*2, tray_h - floor_t + 0.01]);
+            cube([tray_w - wall*2, tray_l - wall*2, round_depth]);
 
         // rim-hang holes punched down through shelf only
         for (c = [0:cols-1]) {
