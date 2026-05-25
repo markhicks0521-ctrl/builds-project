@@ -6,6 +6,37 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-24 — Ammo Box — 9mm 50rd Tray Design and Test Print
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`, `3dprints/ammo-boxes/9mm_50rd_tray.stl` (exported for print)
+
+**Commits this session:**
+- `Add 9mm 50rd parametric ammo box — initial design`
+- `Fix ammo tray — solid floor, rim-hang holes, lid detent and hard stop`
+- `Step 1 — clean base geometry for test print`
+- `Fix tray hollow — preserve shelf for rim-hang holes`
+- `Session log — 9mm ammo box day 1, tray test print sent`
+
+**What was built:**
+- `9mm_50rd_box.scad` — fully parametric ammo tray with 5×10 grid (50 rounds), 9.5mm rim-hang holes, solid floor, 2mm shelf. Rounds sit tip-down hanging by the case rim.
+- Multiple design iterations: fixed hollow interior bug that was hiding the hole grid, settled on clean 38-line base geometry.
+- `9mm_50rd_tray.stl` exported for test print on Bambu P2S in PLA.
+
+**Design decisions:**
+- `hole_d = 9.5mm` — sits between case body (~9.65mm) and rim (9.96mm) so rim catches on shelf edge
+- `shelf_t = 2mm`, `floor_t = 2mm`, `wall = 2mm`, `round_depth = 20mm`
+- Tray dimensions: 57.5 × 115 × 24mm
+- Sliding lid system designed but not yet built — Step 2 after test print confirms fit
+- Lid plan: flush sliding like a .22 LR factory box, channel cut into inside top of tray walls, slides in from long side, detent + hard stop closure
+
+**Next session:**
+- Check test print, verify 9mm round fit in holes
+- Adjust `hole_d` if needed
+- Build sliding lid with channel, tongue, detent and hard stop
+- Add debossed lid graphics (bullet silhouette, 9MM, 50 RDS)
+
+---
+
 ## 2026-05-24 — Ammo Box Step 1: clean base geometry for test print
 
 **Modified:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
