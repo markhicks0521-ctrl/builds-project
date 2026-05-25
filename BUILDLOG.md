@@ -6,6 +6,22 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-24 — Ammo Box Redesign: solid floor, rim-hang, lid retention
+
+**Modified:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Committed:** `Fix ammo tray — solid floor, rim-hang holes, lid detent and hard stop`
+
+**Changes:**
+- `hole_d` fixed at 9.5 mm (was derived). Case rim 9.96 mm > hole so round drops tip-down and hangs by rim on shelf edge.
+- Floor is now fully solid. Added `shelf_t = 2` parameter; holes punch through shelf only (top 2 mm of tray body).
+- `tray_h` updated to `floor_t + round_depth + shelf_t = 24 mm`.
+- Lid hard stop: 2 mm tall × 2 mm deep tab across full cavity width at inside of closed end — prevents lid sliding completely off.
+- Lid detent: 1.5 mm radius hemisphere bumps on inner long-side walls near closed end (`detent_from_end = 5 mm`). Matching 1.6 mm radius / 0.5 mm deep divots on outer faces of tray lip long walls at same position.
+- Tray outer dims now approx 61.5 × 119 × 24 mm + 4 mm lip (smaller footprint due to reduced hole_d).
+
+---
+
 ## 2026-05-24 — 9mm Ammo Box (OpenSCAD)
 
 **Built:** Fully parametric 9mm 50-round ammo box with sliding tray-style lid

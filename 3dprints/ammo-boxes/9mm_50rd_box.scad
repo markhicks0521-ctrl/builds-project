@@ -4,8 +4,8 @@ base_d = 9.93;         // case base diameter mm
 cartridge_oal = 29.69; // overall cartridge length mm
 
 // === FIT PARAMETERS ===
-hole_clearance = 0.47; // added to base_d for hole diameter
 lid_clearance = 0.3;   // sliding fit clearance for lid rails
+detent_from_end = 5;   // mm from closed end to detent centre
 
 // === GRID ===
 cols = 5;
@@ -13,23 +13,24 @@ rows = 10;
 
 // === TRAY PARAMETERS ===
 wall = 2;
-floor_t = 2;
-round_depth = 20;      // how deep rounds sit in tray
+floor_t = 2;           // solid floor thickness
+shelf_t = 2;           // hole-shelf thickness at tray top
+round_depth = 20;      // pocket depth below shelf (round body hangs here)
 lip_h = 4;             // height of lip the lid slides over
 
 // === DERIVED ===
-hole_d = base_d + hole_clearance;
+// hole_d < case rim (9.96 mm): round drops tip-down, hangs by rim on shelf edge
+hole_d = 9.5;
 cell_w = hole_d + wall;
 tray_inner_w = cols * cell_w;
 tray_inner_l = rows * cell_w;
 tray_outer_w = tray_inner_w + wall * 2;
 tray_outer_l = tray_inner_l + wall * 2;
-tray_h = round_depth + floor_t;
+tray_h = floor_t + round_depth + shelf_t;  // total tray body height
 
 $fn = 32;
 corner_r = 2;
 
-// Rounded-corner box using hull of 4 corner cylinders
 module rounded_box(w, l, h, r = 2) {
     hull() {
         translate([r,   r,   0]) cylinder(r=r, h=h);
@@ -42,12 +43,16 @@ module rounded_box(w, l, h, r = 2) {
 // ─── TRAY ────────────────────────────────────────────────────────────────────
 
 module ammo_tray() {
+    detent_z = tray_h + lip_h / 2;  // mid-height of lip for divot centre
+    // Divot sphere inset so cap depth = r - inset = 1.6 - 1.1 = 0.5 mm
+    divot_inset = 1.1;
+
     difference() {
         union() {
-            // Main tray body
+            // Tray body: solid floor + open round pocket + solid shelf
             rounded_box(tray_outer_w, tray_outer_l, tray_h, corner_r);
 
-            // Lip collar: wall-thick hollow raised ring above tray body
+            // Lip collar above tray body
             translate([0, 0, tray_h])
                 difference() {
                     rounded_box(tray_outer_w, tray_outer_l, lip_h, corner_r);
@@ -56,94 +61,115 @@ module ammo_tray() {
                 }
         }
 
-        // Inner pocket — cartridges sit here
+        // Round pocket: above solid floor, below solid shelf
         translate([wall, wall, floor_t])
             cube([tray_inner_w, tray_inner_l, round_depth + 0.01]);
 
-        // Cartridge holes punched through floor (enables push-out from below)
+        // Rim-hang holes through shelf only — floor stays solid
         for (c = [0:cols-1]) {
             for (r = [0:rows-1]) {
                 translate([
                     wall + c * cell_w + cell_w / 2,
                     wall + r * cell_w + cell_w / 2,
-                    -0.01
+                    tray_h - shelf_t - 0.01
                 ])
-                    cylinder(d=hole_d, h=floor_t + 0.02);
+                    cylinder(d=hole_d, h=shelf_t + 0.02);
             }
         }
+
+        // Detent divots on outer faces of long-side lip walls, near closed end
+        // Left wall outer face at x=0 → sphere centre at x=divot_inset
+        translate([divot_inset, tray_outer_l - detent_from_end, detent_z])
+            sphere(r=1.6);
+        // Right wall outer face at x=tray_outer_w → centre at x=tray_outer_w-divot_inset
+        translate([tray_outer_w - divot_inset, tray_outer_l - detent_from_end, detent_z])
+            sphere(r=1.6);
     }
 }
 
 // ─── LID ─────────────────────────────────────────────────────────────────────
 
-// 9mm FMJ side-profile silhouette, centered at origin, for deboss
 module bullet_silhouette() {
-    bw = 8;    // 8 mm wide
-    bh = 22;   // 22 mm tall
-    // Ogive begins at 60 % up from base (10 % above centre)
-    body_top = bh * 0.1;
+    bw = 8;
+    bh = 22;
+    body_top = bh * 0.1;  // ogive starts 60 % up from base
     linear_extrude(0.81)
     polygon([
-        [-bw/2, -bh/2],       // base left
-        [ bw/2, -bh/2],       // base right
-        [ bw/2,  body_top],   // shoulder right
-        [ bw/4,  bh/2 - 2],  // ogive right
-        [ 0,     bh/2],       // tip
-        [-bw/4,  bh/2 - 2],  // ogive left
-        [-bw/2,  body_top]    // shoulder left
+        [-bw/2, -bh/2],
+        [ bw/2, -bh/2],
+        [ bw/2,  body_top],
+        [ bw/4,  bh/2 - 2],
+        [ 0,     bh/2],
+        [-bw/4,  bh/2 - 2],
+        [-bw/2,  body_top]
     ]);
 }
 
 module ammo_lid() {
-    // Outer footprint fits over the lip with sliding clearance
     lid_outer_w = tray_outer_w + lid_clearance * 2;
     lid_outer_l = tray_outer_l - lid_clearance;
-    lid_t     = 3;
-    inner_h   = lip_h + lid_clearance;
-    total_h   = lid_t + inner_h;
-    groove_w  = 2;
-    groove_d  = 1.5;
+    lid_t    = 3;
+    inner_h  = lip_h + lid_clearance;   // cavity height: lip fits with clearance
+    total_h  = lid_t + inner_h;
+    groove_w = 2;
+    groove_d = 1.5;
+    tab_h    = 2;   // hard-stop tab height
+    tab_d    = 2;   // hard-stop tab depth (y)
+    detent_r = 1.5; // bump hemisphere radius
 
-    // Rail groove x positions: centred over the two long-side lip walls
-    //   Left lip wall occupies x [0, wall] in tray coords
-    //   → x [lid_clearance, lid_clearance+wall] in lid coords
+    // Rail groove x: centred over long-side lip wall tops
     groove_x_L = lid_clearance + (wall - groove_w) / 2;
     groove_x_R = lid_clearance + tray_outer_w - wall + (wall - groove_w) / 2;
 
-    difference() {
-        // Lid outer body — rounded corners
-        rounded_box(lid_outer_w, lid_outer_l, total_h, corner_r);
+    // Detent bump position in lid coords
+    bump_y = lid_outer_l - detent_from_end;
+    bump_z = lip_h / 2;   // matches tray divot at mid-height of lip
 
-        // Inner cavity: open at y=0 (sliding entry end),
-        //               closed-end wall at y = lid_outer_l - wall
-        translate([lid_clearance, -0.01, 0])
-            cube([tray_outer_w, lid_outer_l - wall + 0.01, inner_h]);
+    union() {
+        difference() {
+            rounded_box(lid_outer_w, lid_outer_l, total_h, corner_r);
 
-        // Rail grooves in ceiling (z = inner_h), running full length
-        translate([groove_x_L, -0.01, inner_h])
-            cube([groove_w, lid_outer_l + 0.02, groove_d]);
-        translate([groove_x_R, -0.01, inner_h])
-            cube([groove_w, lid_outer_l + 0.02, groove_d]);
+            // Inner cavity: open at y=0 (sliding entry), wall at closed end
+            translate([lid_clearance, -0.01, 0])
+                cube([tray_outer_w, lid_outer_l - wall + 0.01, inner_h]);
 
-        // ── Top-face deboss design ──────────────────────────────────────────
+            // Rail grooves in ceiling (z=inner_h), full length
+            translate([groove_x_L, -0.01, inner_h])
+                cube([groove_w, lid_outer_l + 0.02, groove_d]);
+            translate([groove_x_R, -0.01, inner_h])
+                cube([groove_w, lid_outer_l + 0.02, groove_d]);
 
-        // Bullet silhouette centred on lid top face
-        translate([lid_outer_w / 2, lid_outer_l / 2, total_h - 0.8])
-            bullet_silhouette();
+            // Top-face deboss: bullet silhouette + labels
+            translate([lid_outer_w / 2, lid_outer_l / 2, total_h - 0.8])
+                bullet_silhouette();
+            translate([lid_outer_w / 2, lid_outer_l / 2 + 15, total_h - 0.8])
+                linear_extrude(0.81)
+                    text("9MM", size=6, font="Liberation Sans:style=Bold",
+                         halign="center", valign="center");
+            translate([lid_outer_w / 2, lid_outer_l / 2 - 17, total_h - 0.8])
+                linear_extrude(0.81)
+                    text("50 RDS", size=5, font="Liberation Sans:style=Bold",
+                         halign="center", valign="center");
+        }
 
-        // "9MM" label above bullet (font size 6)
-        translate([lid_outer_w / 2, lid_outer_l / 2 + 15, total_h - 0.8])
-            linear_extrude(0.81)
-                text("9MM", size=6,
-                     font="Liberation Sans:style=Bold",
-                     halign="center", valign="center");
+        // Hard stop: full-width tab on inside of closed end, 2 mm tall × 2 mm deep
+        // Catches tray near wall when lid is almost fully slid off
+        translate([lid_clearance, lid_outer_l - wall - tab_d, 0])
+            cube([tray_outer_w, tab_d, tab_h]);
 
-        // "50 RDS" label below bullet (font size 5)
-        translate([lid_outer_w / 2, lid_outer_l / 2 - 17, total_h - 0.8])
-            linear_extrude(0.81)
-                text("50 RDS", size=5,
-                     font="Liberation Sans:style=Bold",
-                     halign="center", valign="center");
+        // Detent bumps: hemispheres on inner long-side walls near closed end
+        // Left inner wall at x=lid_clearance, bump protrudes +x into cavity
+        translate([lid_clearance, bump_y, bump_z])
+            intersection() {
+                sphere(r=detent_r);
+                translate([0, -50, -50]) cube([100, 100, 100]);
+            }
+        // Right inner wall at x=lid_clearance+tray_outer_w, protrudes -x
+        translate([lid_clearance + tray_outer_w, bump_y, bump_z])
+            intersection() {
+                sphere(r=detent_r);
+                translate([-100, -50, -50]) cube([100, 100, 100]);
+            }
     }
 }
 
