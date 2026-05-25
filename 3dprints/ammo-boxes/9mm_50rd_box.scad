@@ -23,7 +23,7 @@ module ammo_tray() {
                     2 + r * 11.5 + 5.75,
                     1.99
                 ])
-                cylinder(d=9.5, h=20.02);
+                cylinder(d=9.5, h=23.33);
             }
         }
         translate([2, 0, 22.3])
