@@ -9,57 +9,50 @@ cell = 11.5;
 tray_w = 61.5;
 tray_l = 119;
 tray_h = 25.3;
-ch_depth = 1.5;
-ch_h = 3;
+rail_h = 3.3;
+lip_w = 2;
 $fn = 48;
 
 module ammo_tray() {
-    difference() {
-        union() {
-            difference() {
-                cube([61.5, 119, 25.3]);
-                for (c = [0:4]) {
-                    for (r = [0:9]) {
-                        translate([
-                            2 + c * 11.5 + 5.75,
-                            2 + r * 11.5 + 5.75,
-                            1.99
-                        ])
+    union() {
+        difference() {
+            cube([tray_w, tray_l, tray_h]);
+            for (c = [0:4]) {
+                for (r = [0:9]) {
+                    translate([2 + c*11.5 + 5.75, 2 + r*11.5 + 5.75, 1.99])
                         cylinder(d=9.5, h=23.33);
-                    }
                 }
             }
-            // raised long walls
-            translate([0, 0, 25.3])     cube([2, 119, 3.3]);
-            translate([59.5, 0, 25.3])  cube([2, 119, 3.3]);
-            // raised short end walls
-            translate([0, 0, 25.3])     cube([61.5, 2, 3.3]);
-            translate([0, 117, 25.3])   cube([61.5, 2, 3.3]);
-            // inward lips — all 4 sides
-            translate([2, 0, 25.3])     cube([1.5, 119, 3.3]);
-            translate([58, 0, 25.3])    cube([1.5, 119, 3.3]);
-            translate([0, 2, 25.3])     cube([61.5, 1.5, 3.3]);
-            translate([0, 117.5, 25.3]) cube([61.5, 1.5, 3.3]);
+            translate([30.75, tray_l - 4, 0])
+                sphere(r=1.2);
         }
-        // sliding gap in open end lip — leaves corner posts, opens middle for lid tongue
-        translate([1.5, 117.5, 25.3]) cube([58, 1.5, 3.3]);
-        // detent divot on open end inside face
-        translate([30.75, 117.5, 26.95]) sphere(r=1.2);
+        translate([0, 0, tray_h])
+            cube([wall, tray_l, rail_h]);
+        translate([tray_w - wall, 0, tray_h])
+            cube([wall, tray_l, rail_h]);
+        translate([0, 0, tray_h])
+            cube([tray_w, wall, rail_h]);
+        translate([wall, 0, tray_h + rail_h - lid_t])
+            cube([lip_w, tray_l, lid_t]);
+        translate([tray_w - wall - lip_w, 0, tray_h + rail_h - lid_t])
+            cube([lip_w, tray_l, lid_t]);
+        translate([0, 0, tray_h + rail_h - lid_t])
+            cube([tray_w, wall, lid_t]);
     }
 }
 
 module ammo_lid() {
-    union() {
-        difference() {
-            cube([61.5, 119, 3]);
-            translate([-0.01, 0, 0])  cube([1.5, 119, 3]);
-            translate([60, 0, 0])     cube([1.5, 119, 3]);
-            translate([0, -0.01, 0])  cube([61.5, 1.5, 3]);
-            translate([0, 117.5, 0])  cube([61.5, 1.5, 3]);
-        }
-        // detent bump — clicks into tray divot on open end
-        translate([30.75, 118, 1.5]) sphere(r=1.2);
+    difference() {
+        cube([tray_w, tray_l, lid_t]);
+        translate([-0.01, -0.01, 0])
+            cube([lip_w + wall + 0.3, tray_l + 0.02, lid_t]);
+        translate([tray_w - lip_w - wall - 0.3, -0.01, 0])
+            cube([lip_w + wall + 0.3, tray_l + 0.02, lid_t]);
+        translate([-0.01, -0.01, 0])
+            cube([tray_w + 0.02, wall + lip_w + 0.3, lid_t]);
     }
+    translate([30.75, tray_l - 4, 0])
+        sphere(r=1.2);
 }
 
 ammo_tray();
