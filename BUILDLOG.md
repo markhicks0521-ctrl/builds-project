@@ -137,6 +137,31 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Lid Design Attempts (Day 2)
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`, `3dprints/ammo-boxes/AmmoBox/AmmoBox.py`
+
+**Commits this session:** Multiple incremental commits — see git log for full list.
+
+**What happened:**
+- Spent full day attempting to get sliding lid geometry correct in OpenSCAD.
+- Multiple approaches tried: hollow tray, solid tray, tongue-groove rails, inward lips, wall containment.
+- Core problems encountered throughout: hole grid clipping at outer walls, lid retention geometry not printing correctly, detent placement.
+- Test print of tray body sent to Bambu P2S — failed due to bridging on holes (since resolved by making holes full depth through solid block).
+- Switched to Fusion 360 Python scripting approach at end of session. Partial tray created (`AmmoBox.py`) but lid and overhang geometry still not complete.
+
+**Current state of `9mm_50rd_box.scad`:**
+- Tray: 63.5×121×28mm, 3mm walls, 2mm floor, 50 holes full depth. Three inward lips at top (left, right, back). Detent divot on back wall inside.
+- Lid: simple flat plate 53.5×113×3mm positioned inside walls. Detent bump on closed end.
+
+**Next session:**
+- Start completely fresh on lid design.
+- Get the sliding lid with proper overhang working before anything else.
+- Nail the detent in correct position.
+- Once box is complete, add debossed graphics to lid.
+
+---
+
 ## 2026-05-25 — Ammo Box — Tray Redesign: solid body, full-height holes, lid channel
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
