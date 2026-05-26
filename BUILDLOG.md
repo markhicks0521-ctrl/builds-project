@@ -6,6 +6,22 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — 4mm walls, proper tongue and groove lid
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `4mm walls — proper tongue and groove lid`
+
+**What changed:**
+- Walls increased to 4mm (was 2mm) — gives material for groove cuts and stronger structure.
+- Tray dims updated: 65.5×127×26mm. Hollow interior above 2mm floor. 50 holes from floor_t through full height.
+- Grooves cut 3mm deep into inside face of left and right walls at z=tray_h-lid_t, full tray_l length.
+- Lid: center plate spans full width between grooves. Left/right tongues 2.7mm wide × 2.7mm tall slot into grooves (0.3mm clearance). Detent bump on closed end face, pull tab on open end.
+- Detent divot on inside of back wall at z=tray_h-lid_t/2.
+
+---
+
 ## 2026-05-25 — Ammo Box — Tongue and groove lid system
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
