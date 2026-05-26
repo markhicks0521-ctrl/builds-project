@@ -30,17 +30,21 @@ module ammo_tray() {
                 }
             }
             // raised long walls
-            translate([0, 0, 25.3])    cube([2, 119, 3.3]);
-            translate([59.5, 0, 25.3]) cube([2, 119, 3.3]);
-            // raised closed short end
-            translate([0, 0, 25.3])    cube([61.5, 2, 3.3]);
-            // inward lip overhangs
-            translate([2, 0, 25.3])    cube([1.5, 119, 3.3]);
-            translate([58, 0, 25.3])   cube([1.5, 119, 3.3]);
-            translate([0, 2, 25.3])    cube([61.5, 1.5, 3.3]);
+            translate([0, 0, 25.3])     cube([2, 119, 3.3]);
+            translate([59.5, 0, 25.3])  cube([2, 119, 3.3]);
+            // raised short end walls
+            translate([0, 0, 25.3])     cube([61.5, 2, 3.3]);
+            translate([0, 117, 25.3])   cube([61.5, 2, 3.3]);
+            // inward lips — all 4 sides
+            translate([2, 0, 25.3])     cube([1.5, 119, 3.3]);
+            translate([58, 0, 25.3])    cube([1.5, 119, 3.3]);
+            translate([0, 2, 25.3])     cube([61.5, 1.5, 3.3]);
+            translate([0, 117.5, 25.3]) cube([61.5, 1.5, 3.3]);
         }
+        // sliding gap in open end lip — leaves corner posts, opens middle for lid tongue
+        translate([1.5, 117.5, 25.3]) cube([58, 1.5, 3.3]);
         // detent divot on open end inside face
-        translate([30.75, 119, 27]) sphere(r=1.2);
+        translate([30.75, 117.5, 26.95]) sphere(r=1.2);
     }
 }
 
@@ -51,9 +55,10 @@ module ammo_lid() {
             translate([-0.01, 0, 0])  cube([1.5, 119, 3]);
             translate([60, 0, 0])     cube([1.5, 119, 3]);
             translate([0, -0.01, 0])  cube([61.5, 1.5, 3]);
+            translate([0, 117.5, 0])  cube([61.5, 1.5, 3]);
         }
-        // detent bump clicks into tray divot
-        translate([30.75, 119, 1.5]) sphere(r=1.2);
+        // detent bump — clicks into tray divot on open end
+        translate([30.75, 118, 1.5]) sphere(r=1.2);
     }
 }
 
