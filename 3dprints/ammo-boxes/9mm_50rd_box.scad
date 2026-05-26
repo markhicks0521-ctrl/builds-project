@@ -6,11 +6,11 @@ hole_d = 9.5;
 cols = 5;
 rows = 10;
 cell = 11.5;
-tray_w = 61.5;
-tray_l = 119;
+tray_w = 63.5;
+tray_l = 121;
 tray_h = 25.3;
 rail_h = 3.3;
-lip_w = 2;
+lip_w = 3;
 $fn = 48;
 
 module ammo_tray() {
@@ -44,14 +44,14 @@ module ammo_tray() {
 module ammo_lid() {
     difference() {
         cube([tray_w, tray_l, lid_t]);
-        translate([-0.01, -0.01, 0])
-            cube([lip_w + wall + 0.3, tray_l + 0.02, lid_t]);
-        translate([tray_w - lip_w - wall - 0.3, -0.01, 0])
-            cube([lip_w + wall + 0.3, tray_l + 0.02, lid_t]);
-        translate([-0.01, -0.01, 0])
-            cube([tray_w + 0.02, wall + lip_w + 0.3, lid_t]);
+        translate([-0.01, 0, 0])
+            cube([wall + lip_w + 0.3, tray_l, lid_t]);
+        translate([tray_w - wall - lip_w - 0.3, 0, 0])
+            cube([wall + lip_w + 0.3, tray_l, lid_t]);
+        translate([0, -0.01, 0])
+            cube([tray_w, wall + lip_w + 0.3, lid_t]);
     }
-    translate([30.75, tray_l - 4, 0])
+    translate([tray_w/2, tray_l - 3, 0])
         sphere(r=1.2);
 }
 
