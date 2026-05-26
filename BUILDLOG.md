@@ -6,6 +6,21 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Correct tongue-groove geometry
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Correct tongue-groove geometry - verified`
+
+**What changed:**
+- Tray_h reduced to 22mm. groove_w=3, groove_h=2. Grooves cut flush with outer left/right walls at top (z=tray_h-groove_h=20 to z=22), full tray_l length.
+- Lid tongues now hang BELOW the lid plate (negative z offset): translate z=-(groove_h-0.3)=-1.7mm. Tongues are groove_w-0.3=2.7mm wide × groove_h-0.3=1.7mm tall — 0.3mm clearance on all sides. Lid sits on top of tray, tongues drop into grooves.
+- Detent divot on back wall inside at tray_h-groove_h/2=21mm. Detent bump on lid closed end at same relative height.
+- Pull tab 24mm wide on open end (y=tray_l side).
+
+---
+
 ## 2026-05-25 — Ammo Box — Verified tongue-groove geometry
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
