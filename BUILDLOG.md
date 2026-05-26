@@ -6,6 +6,21 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Tongue and groove lid system
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Tongue and groove lid system — all holes usable`
+
+**What changed:**
+- New lid retention system: grooves cut into left and right walls (x=2–5.5 and x=56–59.5, z=22.5–26), lid has matching tongues (3.2mm wide × 3.2mm tall) that slide into the grooves. Lid slides in from open end (y=119 side).
+- Tray structure: floor + left/right walls + back wall unioned with solid hole block (57.5×115×24mm fill), then 50 holes and grooves subtracted. All 50 holes fully usable.
+- Lid: main plate 54.5mm wide between grooves, left/right tongues, pull tab on open end (y=119), detent bump on closed end face.
+- Detent: divot on back wall inside face at y=2.6, z=24. Bump on lid closed end at y=0.1, z=1.5.
+
+---
+
 ## 2026-05-25 — Ammo Box — Stacked primitives rewrite
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
