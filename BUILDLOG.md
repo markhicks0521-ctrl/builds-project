@@ -6,6 +6,22 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Verified tongue-groove geometry
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Verified tongue-groove ammo box`
+
+**What changed:**
+- Parametric rewrite with clean variable names. Tray 63.5×121×24mm, wall=3mm, floor=2mm.
+- 50 holes: 9.5mm dia, 22mm deep from floor_t. All centered in 11.5mm cells.
+- Grooves: 3mm wide × 3.5mm tall, cut flush with outer left/right faces at top of tray (z=tray_h-groove_h). Lid tongues slide in from either end.
+- Lid: full-width plate (63.5×121×3mm) plus left/right tongues (groove_d-0.3 = 2.7mm wide × groove_h-0.3 = 3.2mm tall, 0.15mm inset for clearance). Pull tab 24mm wide on open end. Detent bump on closed end face.
+- Detent divot inside tray at tray_h/2 on back wall.
+
+---
+
 ## 2026-05-25 — Ammo Box — 4mm walls, proper tongue and groove lid
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
