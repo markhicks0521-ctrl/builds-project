@@ -6,6 +6,22 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Simple walls contain lid
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Simple walls contain lid`
+
+**What changed:**
+- Completely different lid retention approach: no grooves or tongues. Three full-height walls (28mm) on left, right, and back contain the lid. Open end (y=121 side) has no wall — lid slides straight in from the top and drops into the cavity.
+- Hole block (57.5×115×20mm) sits on 2mm floor between walls, 50 holes subtracted through it. Lid (57.5×115×3mm) sits on top of hole block at z=22, contained by walls on 3 sides.
+- Lid is a simple flat plate with pull tab on open end and detent bump on closed end face.
+- Detent divot on inside of back wall at z=12 (mid-height of hole block).
+- All hardcoded dims — no parameters.
+
+---
+
 ## 2026-05-25 — Ammo Box — Correct tongue-groove geometry
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
