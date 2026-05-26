@@ -6,6 +6,26 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Clean rewrite: verified geometry, flush sliding lid
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Clean rewrite — verified geometry, flush sliding lid`
+
+**What changed:**
+- Full clean rewrite. Consolidated parameters: `hole_depth=20`, `tray_h=22`, `rail_h=4`, `lip=2`, `lid_t=3`, `cl=0.4` (clearance).
+- Tray: main body 61.5×119×22mm, 50 holes from z=floor_t (2mm) to z=22mm. Four U-rails (2mm tall, 4mm high) around all sides at z=22. Four inward lips (2mm wide × 3mm tall) at top of rails, all four sides. Detent divot on open end inside face.
+- Lid: flat plate 61.5×119×3mm with four-edge notches (wall+lip+cl = 4.4mm) leaving a tongue that fits inside the rails. Detent bump on open end face.
+- Lid slides in from the open short end (y=119 side).
+- Parameters cleaned up — removed ch_depth, ch_h, shelf_t, round_depth aliases.
+
+**Design state:**
+- Ready to export tray STL and test print lid fit
+- Clearance cl=0.4mm — may need tuning after first print
+
+---
+
 ## 2026-05-25 — Ammo Box — Fix: solid floor, raised walls for lid recess
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
