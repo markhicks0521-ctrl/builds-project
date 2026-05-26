@@ -6,6 +6,25 @@ At the end of every session, update this file with: date, what was built or chan
 
 ---
 
+## 2026-05-25 — Ammo Box — Stacked primitives rewrite
+
+**Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
+
+**Commits this session:**
+- `Stacked primitives rewrite — clean lid and tray`
+
+**What changed:**
+- Complete rewrite using stacked union primitives (no parametric variables — all hardcoded dims for clarity).
+- Tray: floor 61.5×119×2mm. Left/right walls 2mm wide × 26mm tall. Back wall (closed end) full width × 26mm. NO front wall — open end for lid entry. Left/right/back inward lips 2mm wide × 3mm tall at z=23. Hole grid: 5×10 cells, 9.5mm dia, 20mm deep from z=2 (solid 2mm floor beneath). Detent divot sphere r=1.2 near front floor at y=116.
+- Lid: 61.5×119×3mm plate. Four-edge notches (4.1mm left/back, 4.2mm right/front) leave a tongue that slots under the tray lips. Detent bump on front edge bottom.
+- Side-by-side preview: tray at origin, lid translated x+80.
+
+**Design decisions:**
+- Open end only (no front wall) — lid slides in from y=119 side
+- Notch dims slightly asymmetric (4.1 vs 4.2) to account for epsilon overcuts
+
+---
+
 ## 2026-05-25 — Ammo Box — Clean rewrite: verified geometry, flush sliding lid
 
 **Files:** `3dprints/ammo-boxes/9mm_50rd_box.scad`
