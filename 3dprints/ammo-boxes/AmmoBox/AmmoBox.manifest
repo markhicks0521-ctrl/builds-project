@@ -1,9 +1,0 @@
-{
-   "autodeskProduct": "Fusion360",
-   "type": "script",
-   "engine": "Python",
-   "author": "Hicks Build Lab",
-   "description": "9mm 50-round ammo box",
-   "helpUrl": "",
-   "version": "1.0"
-}
