@@ -23,12 +23,13 @@ At the end of every session, edit this file in place — add, remove, or reword 
 - Holes run full depth from floor_t to top — no bridging. Rounds sit tip-down; rim (9.96mm) catches on top edge of hole.
 - Parametric: all key dims are variables at top of file for easy tuning after print.
 
-**What's working:**
-- Nothing printed yet — test piece is the first step.
+**Print status:**
+- Sliced and sent to Bambu H2C. Printing now.
+- hole_d=9.5mm is based on standard 9mm spec (case body 9.65mm, rim 9.96mm) — not yet verified with calipers.
 
 **What's next:**
-- Print `9mm_test_piece.scad`, verify 9mm round drops in and seats by rim.
-- Adjust `hole_d` if too tight or too loose, reprint until fit is confirmed.
+- Measure actual round with calipers. Check rim seating on printed piece.
+- Adjust hole_d if needed and reprint until fit is confirmed.
 - Once hole fit is verified, build full 5×10 tray with solid floor, then design sliding lid.
 
 ---
