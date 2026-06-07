@@ -10,6 +10,23 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 ---
 
+## HicksCreations iOS App
+
+**Status:** iOS development on hold until Xcode Mac user is set up.
+
+**Migration:** App migrated from Mac via thumb drive, added to `apps/HicksCreations/`. Old `.git` and `xcuserdata` folders excluded. `DEVLOG.md` and `CLAUDE.md` reformatted to living document format.
+
+**What it is:** Swift/Shopify storefront client with teal and leopard theme. Integrated with Shopify Storefront GraphQL API.
+
+**Known issues carried over:**
+- Tab bar blurry
+- Shop screen missing product images
+- Product detail layout broken
+- Cart cards unreadable
+- Candy mix options incomplete (Chamoy & Tajin handle unknown)
+
+---
+
 ## Ammo Box — 9mm 50rd
 
 **Status:** Fresh start — all previous scad/stl/Fusion360 files deleted. Starting from a fit-verification test piece before building the full tray.
@@ -24,22 +41,11 @@ At the end of every session, edit this file in place — add, remove, or reword 
 - Parametric: all key dims are variables at top of file for easy tuning after print.
 
 **Print status:**
-- Sliced and sent to Bambu H2C. Printing now.
+- 2x2 test piece sent to Bambu H2C. Awaiting caliper measurements to verify fit.
 - hole_d=9.5mm is based on standard 9mm spec (case body 9.65mm, rim 9.96mm) — not yet verified with calipers.
 
 **What's next:**
-- Measure actual round with calipers. Check rim seating on printed piece.
+- Measure actual round with calipers tomorrow. Check rim seating on printed piece.
 - Adjust hole_d if needed and reprint until fit is confirmed.
 - Once hole fit is verified, build full 5×10 tray with solid floor, then design sliding lid.
 
----
-
-## 2026-05-24 — Initial Setup
-
-**Built:** Project folder structure (`3dprints/`, `websites/`, `apps/`, `scripts/`), `README.md`
-
-**Files created:** `README.md`, `3dprints/.gitkeep`, `websites/.gitkeep`, `apps/.gitkeep`, `scripts/.gitkeep`
-
-**Committed:** `Initial setup — Hicks Build Lab`
-
-**Notes:** `.claude` folder was initially placed at Nextcloud root level, moved to `builds-project` root where it belongs. GitHub remote added manually via PowerShell (gh CLI not installed on this machine). Pushed to https://github.com/markhicks0521-ctrl/builds-project
