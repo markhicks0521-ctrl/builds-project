@@ -10,3 +10,4 @@
 
 ## Files
 - `H2D_TPU_top_spool_holder.3mf` — downloaded model/print file from MakerWorld
+- `FilamentSpool_Adapter_SnpU1.stl` — filament spool adapter for the Snapmaker U1. Dimensions approximately 138.87 x 138.87 x 75mm.
