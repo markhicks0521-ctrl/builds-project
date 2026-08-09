@@ -80,7 +80,13 @@ Note: the Combine consumes the original `KoozieBody` and emits the koozie as the
 - `design.exportManager.createC3MFExportOptions(root, filepath)` exports multi-body designs as **N independent build items** (one per body) with no positioning transform between them.
 - This causes slicers (confirmed with Bambu Studio) to treat each body as a separate standalone object and auto-drop each one to bed level (Z=0) individually. Any body not originally at Z=0 gets visually scattered/flattened onto the print bed — **even though the underlying mesh geometry is completely correct and unmodified.** Symptom looks like duplicated junk geometry in the export; it isn't. Verify by unzipping the 3mf and checking part positions before assuming the model is broken.
 - **FIX:** post-process the exported 3mf (it's a zip archive containing `3D/3dmodel.model` XML) to restructure from N independent objects/build-items into **ONE object with N `<components>`**, referenced by a single build item. This is valid standard 3MF multi-part representation and prevents the auto-drop-to-bed scattering. Geometry is untouched — mesh data stays byte-identical.
-- The script for this currently exists only in a Claude Code session scratchpad, which is **ephemeral**. It should be committed into this repo as a reusable tool before the next multi-color export, or it will have to be rewritten from scratch.
+- **Script:** [`scripts/3mf_single_object.py`](../../scripts/3mf_single_object.py) — run it on any Fusion multi-body 3MF export before opening in the slicer:
+
+  ```
+  python scripts/3mf_single_object.py model.3mf --name "HC 12oz Koozie" --verify
+  ```
+
+  Rewrites in place (keeps a `.bak`), or use `-o` to write elsewhere. `--verify` asserts mesh vertex/triangle counts are unchanged before writing. Safe to re-run — it detects an already-grouped file and does nothing.
 
 ## Print history
 
