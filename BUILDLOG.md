@@ -10,6 +10,12 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 ---
 
+## Reference docs
+
+- [`3dprints/PRINTER_NOTES.md`](3dprints/PRINTER_NOTES.md) — cross-project printer/slicer knowledge: H2C PETG interface supports, U1 PLA support + first-layer tuning, infill pattern choices.
+
+---
+
 ## HicksCreations iOS App
 
 **Status:** iOS development on hold until Xcode Mac user is set up.

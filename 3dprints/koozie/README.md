@@ -88,6 +88,10 @@ Note: the Combine consumes the original `KoozieBody` and emits the koozie as the
 
   Rewrites in place (keeps a `.bak`), or use `-o` to write elsewhere. `--verify` asserts mesh vertex/triangle counts are unchanged before writing. Safe to re-run — it detects an already-grouped file and does nothing.
 
+## Slicer settings
+
+Printer/slicer settings that aren't specific to this model — H2C PETG interface supports, Adaptive Cubic infill, multi-color support-bleed settings — live in [`3dprints/PRINTER_NOTES.md`](../PRINTER_NOTES.md). Check there before slicing.
+
 ## Print history
 
 - **2026-08-09** — First multi-color prototype (black/pink/red) sent to printer. Purpose: verify color mapping, overall look, and whether the 66.4mm inner diameter / 109.7mm height / all decorative elements come together correctly in a real print. Result: TBD.

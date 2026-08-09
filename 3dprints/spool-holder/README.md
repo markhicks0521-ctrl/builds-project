@@ -13,6 +13,8 @@
 - `FilamentSpool_Adapter_SnpU1.stl` — filament spool adapter for the Snapmaker U1. Dimensions approximately 138.87 x 138.87 x 75mm.
 - `FilamentSpool_Adapter_SnpU1.gcode` — sliced output for the U1 (0.4mm nozzle, 0.20mm standard process, Snapmaker PLA), generated via the OrcaSlicer CLI command below.
 
+Cross-project printer/slicer settings — U1 support + first-layer tuning, H2C PETG interface supports, infill pattern choices — are in [`3dprints/PRINTER_NOTES.md`](../PRINTER_NOTES.md).
+
 ## Slicing via OrcaSlicer CLI
 
 `orca-slicer.exe` (`C:\Program Files\OrcaSlicer\orca-slicer.exe`) has no `--help`/`-h` output, but its CLI flags are real and validated — `--load-settings`/`--load-filaments` require **full paths to the profile `.json` files**, not preset display names.
