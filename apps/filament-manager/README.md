@@ -4,14 +4,14 @@
 
 # Filament Manager
 
-**Status:** Early development. `database.py` built and tested.
+**Status:** `database.py` CRUD is complete and tested. GUI work started in `main.py`.
 
 **Learning project:** Mark is writing all the Python code himself, working through it line by line to understand it. Claude Code is not generating application code.
 
 ## Stack
 
 - SQLite for storage (`filament.db`)
-- Flet for the GUI (planned, `main.py`)
+- Flet for the GUI (`main.py`), running in a project-local virtual environment (`venv/`)
 
 ## `database.py`
 
@@ -20,15 +20,21 @@
 | `get_connection()` | Opens the SQLite connection |
 | `init_db()` | Creates the `spools` table |
 | `add_spool()` | Inserts a new spool row — parameterized query with `?` placeholders to avoid SQL injection |
+| `get_all_spools()` | Reads all spool rows |
+| `update_remaining_weight(spool_id, new_weight)` | Updates one spool's remaining weight — `WHERE` clause targets a single row |
+| `delete_spool(spool_id)` | Deletes one spool row — `WHERE` clause targets a single row |
 
 **`spools` table:** `id`, `brand`, `material`, `color`, `total_weight_g`, `remaining_weight_g`
 
-**Tested:** ran `init_db()` to create `filament.db`, then from the Python REPL imported the module, called `add_spool("Bambu", "PLA", "Black", 1000, 1000)`, and confirmed the row was written by querying it back with `cursor.execute("SELECT * FROM spools")` / `fetchall()` — returned `[(1, 'Bambu', 'PLA', 'Black', 1000.0, 1000.0)]`.
+**Tested:** full CRUD cycle run by hand in the Python REPL with real data — add a spool, read it back, update its weight, read it back again, delete it, confirm the table is empty. Mark caught and fixed two of his own typos during this process (a misspelled parameter name, a misspelled function name) using LSP/Ruff/Pyright error messages, without needing them pointed out.
 
 `database.py` is committed and pushed to GitHub.
 
+## `main.py` (GUI)
+
+Set up a Python virtual environment (`venv/`) in the project folder and installed Flet inside it. `main.py` imports `flet` and `database`, defines a `main(page)` function that calls `get_all_spools()`, loops over the results, and displays each spool as a `Text` widget via an f-string. Ran successfully — a native window titled "Filament Manager" opened showing live data from `filament.db` ("Bambu - PLA - BLACK").
+
 ## Next steps
 
-1. Add `get_all_spools()`, `update_spool()`, and `delete_spool()` to `database.py`.
-2. Build the Flet GUI in `main.py`.
-3. Commit and push incrementally as each piece lands.
+1. Build an "Add Spool" form in the GUI (text input fields + a button) that calls `add_spool()`, replacing REPL-based inserts.
+2. Commit and push.

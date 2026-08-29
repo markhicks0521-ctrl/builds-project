@@ -35,11 +35,13 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 ## Filament Manager
 
-**Status:** Early development. Started 2026-08-28. Hand-written Python learning project — Claude Code is not writing the application code. Full detail in [`apps/filament-manager/README.md`](apps/filament-manager/README.md).
+**Status:** Started 2026-08-28. Hand-written Python learning project — Claude Code is not writing the application code. Full detail in [`apps/filament-manager/README.md`](apps/filament-manager/README.md).
 
-`database.py` built and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, color, total_weight_g, remaining_weight_g), and `add_spool()` (parameterized `?` inserts). Verified end to end — `init_db()` created `filament.db`, then `add_spool("Bambu", "PLA", "Black", 1000, 1000)` from the REPL, row read back as `[(1, 'Bambu', 'PLA', 'Black', 1000.0, 1000.0)]`.
+`database.py`'s full CRUD set is complete and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, color, total_weight_g, remaining_weight_g), `add_spool()`, `get_all_spools()`, `update_remaining_weight(spool_id, new_weight)`, and `delete_spool(spool_id)` (the latter two use `WHERE` clauses to target one row). Full cycle tested by hand in the REPL with real data — add, read, update, read, delete, confirm empty. Mark caught and fixed two of his own typos (misspelled parameter name, misspelled function name) using LSP/Ruff/Pyright errors, unprompted.
 
-**Next:** add `get_all_spools()`, `update_spool()`, `delete_spool()` to `database.py`; build the Flet GUI in `main.py`; then commit and push to GitHub.
+GUI work started: set up a project-local venv, installed Flet, wrote `main.py` — imports `flet` and `database`, `main(page)` calls `get_all_spools()` and displays each row as a `Text` widget. Ran successfully — native "Filament Manager" window showing live data ("Bambu - PLA - BLACK").
+
+**Next:** build an "Add Spool" form in the GUI (inputs + button calling `add_spool()`); then commit and push to GitHub.
 
 ---
 
