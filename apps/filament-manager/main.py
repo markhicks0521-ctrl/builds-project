@@ -15,7 +15,31 @@ def main(page: ft.Page):
     def refresh_spool_list():
         spool_list.controls.clear()
         for spool in database.get_all_spools():
-            spool_list.controls.append(ft.Text(f"{spool[1]} - {spool[2]} - {spool[3]} - {spool[5]}g / {spool[4]}g"))
+            spool_id = spool[0]
+
+            new_weight_input = ft.TextField(label="New weight", width=100)
+
+            def make_delete_handler(sid):
+                def handler(e):
+                    database.delete_spool(sid)
+                    refresh_spool_list()
+                return handler
+
+            def make_update_handler(sid, field):
+                def handler(e):
+                    database.update_remaining_weight(sid, float(field.value))
+                    refresh_spool_list()
+                return handler
+
+            row = ft.Row(
+                controls=[
+                    ft.Text(f"{spool[1]} - {spool[2]} - {spool[3]} - {spool[5]}g / {spool[4]}g"),
+                    new_weight_input,
+                    ft.ElevatedButton(content="Update", on_click=make_update_handler(spool_id, new_weight_input)),
+                    ft.ElevatedButton(content="Delete", on_click=make_delete_handler(spool_id)),
+                ]
+            )
+            spool_list.controls.append(row)
         page.update()
 
     def add_spool_clicked(e):

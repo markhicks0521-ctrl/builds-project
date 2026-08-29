@@ -4,7 +4,7 @@
 
 # Filament Manager
 
-**Status:** `database.py` CRUD is complete and tested. GUI has a working Add Spool form with a live-updating list.
+**Status:** **Milestone — full CRUD working end to end through the GUI.** No REPL needed for day-to-day use anymore.
 
 **Learning project:** Mark is writing all the Python code himself, working through it line by line to understand it. Claude Code is not generating application code.
 
@@ -45,7 +45,19 @@ Set up a Python virtual environment (`venv/`) in the project folder and installe
 
 Also learned that `ft.ElevatedButton`'s label parameter is `content`, not `text` — the LSP flagged the wrong usage, and the fix was found by checking the current official Flet docs (the API has changed across versions).
 
-## Next steps
+**Update / Delete (full CRUD milestone):** each row in the spool list now has its own "New weight" `TextField`, an Update button, and a Delete button — the last two CRUD operations, wired to `database.update_remaining_weight()` and `database.delete_spool()`.
 
-1. Add Update (remaining weight) and Delete buttons to each row in the spool list, wired to `update_remaining_weight()` and `delete_spool()`.
-2. Commit and push.
+The Update/Delete buttons use Python closures: `make_delete_handler(sid)` and `make_update_handler(sid, field)` each return an inner `handler()` function, called once per spool inside the refresh loop, so each button "remembers" its own spool's id (and, for Update, its own weight input field) independently of every other row's buttons. Verified with real multi-row testing — updating one spool's weight or deleting one spool leaves every other row completely untouched, confirming the closures correctly isolate each row's data.
+
+**Two more bugs found and fixed by Mark this session**, both traced through LSP error messages:
+- A newly-created `new_weight_input` `TextField` and the Update button were built but never actually added to the row's controls list — LSP flagged it directly ("assigned to but never used"). Same root category as the earlier "created a widget but never added it to the page" bug, caught faster this time.
+- A stray parenthesis typo inside a variable name (`new_weight_input` became `new)weight_input`) caused a cascading syntax error across ~13 lines — correctly recognized as "probably one small thing" rather than being overwhelmed by the error count, consistent with a similar bug pattern from earlier in the project.
+
+**Note on closures:** Mark has said closures aren't fully clicking conceptually yet, despite getting them working correctly twice now (delete and update). Expected — this is a "repetition builds understanding" concept, not a one-explanation concept. Worth revisiting/reinforcing in future sessions rather than assuming it's settled.
+
+## Next steps (not yet decided)
+
+- Clean up Flet deprecation warnings (`ft.app()` → `ft.run()`, `ElevatedButton` → `Button`).
+- Input validation — handle non-numeric weight entries gracefully instead of crashing.
+- Visual/UI polish.
+- Or: consider this a complete v1 and move to a different phase.
