@@ -25,8 +25,10 @@
 
 **Tested:** ran `init_db()` to create `filament.db`, then from the Python REPL imported the module, called `add_spool("Bambu", "PLA", "Black", 1000, 1000)`, and confirmed the row was written by querying it back with `cursor.execute("SELECT * FROM spools")` / `fetchall()` — returned `[(1, 'Bambu', 'PLA', 'Black', 1000.0, 1000.0)]`.
 
+`database.py` is committed and pushed to GitHub.
+
 ## Next steps
 
 1. Add `get_all_spools()`, `update_spool()`, and `delete_spool()` to `database.py`.
 2. Build the Flet GUI in `main.py`.
-3. Commit and push to GitHub.
+3. Commit and push incrementally as each piece lands.
