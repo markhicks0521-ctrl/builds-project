@@ -39,9 +39,11 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 `database.py`'s full CRUD set is complete and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, color, total_weight_g, remaining_weight_g), `add_spool()`, `get_all_spools()`, `update_remaining_weight(spool_id, new_weight)`, and `delete_spool(spool_id)` (the latter two use `WHERE` clauses to target one row). Full cycle tested by hand in the REPL with real data — add, read, update, read, delete, confirm empty. Mark caught and fixed two of his own typos (misspelled parameter name, misspelled function name) using LSP/Ruff/Pyright errors, unprompted.
 
-GUI work started: set up a project-local venv, installed Flet, wrote `main.py` — imports `flet` and `database`, `main(page)` calls `get_all_spools()` and displays each row as a `Text` widget. Ran successfully — native "Filament Manager" window showing live data ("Bambu - PLA - BLACK").
+GUI: `main.py` now has a working Add Spool form (`TextField`s for brand/material/color/total weight, an `ElevatedButton`) wired to `database.add_spool()`, plus a live-updating spool list (`spool_list`, a Flet `Column`) rebuilt by `refresh_spool_list()` from `database.get_all_spools()` on every add. Form clears itself after a successful add. Display format: `"brand - material - color - remaining_weight_g / total_weight_g"`.
 
-**Next:** build an "Add Spool" form in the GUI (inputs + button calling `add_spool()`); then commit and push to GitHub.
+Three real bugs found and fixed by Mark this session, self-diagnosed via LSP/Ruff/Pyright and his own testing: a missing argument in the `add_spool()` call (material skipped between brand and color); unclosed parens on a `.append()` line that cascaded into misleading downstream errors (repeat pattern from last session, recognized correctly this time); and `spool_list` never being passed to `page.add()`, so nothing rendered despite correct underlying logic — isolated by comparing working/non-working code and checking the database directly via REPL. Also sorted out that `ft.ElevatedButton`'s label param is `content`, not `text`, per current Flet docs.
+
+**Next:** add Update (remaining weight) and Delete buttons to each spool row, wired to `update_remaining_weight()` and `delete_spool()`; then commit and push to GitHub.
 
 ---
 

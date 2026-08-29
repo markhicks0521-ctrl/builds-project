@@ -4,7 +4,7 @@
 
 # Filament Manager
 
-**Status:** `database.py` CRUD is complete and tested. GUI work started in `main.py`.
+**Status:** `database.py` CRUD is complete and tested. GUI has a working Add Spool form with a live-updating list.
 
 **Learning project:** Mark is writing all the Python code himself, working through it line by line to understand it. Claude Code is not generating application code.
 
@@ -32,9 +32,20 @@
 
 ## `main.py` (GUI)
 
-Set up a Python virtual environment (`venv/`) in the project folder and installed Flet inside it. `main.py` imports `flet` and `database`, defines a `main(page)` function that calls `get_all_spools()`, loops over the results, and displays each spool as a `Text` widget via an f-string. Ran successfully — a native window titled "Filament Manager" opened showing live data from `filament.db` ("Bambu - PLA - BLACK").
+Set up a Python virtual environment (`venv/`) in the project folder and installed Flet inside it. `main.py` imports `flet` and `database`, defines a `main(page)` function that displays the spool list and now includes a working Add Spool form.
+
+**Add Spool form:** `TextField`s for brand, material, color, and total weight, plus an `ElevatedButton` wired to `database.add_spool()`. Fields clear themselves after a successful add.
+
+**Live spool list:** a Flet `Column` (`spool_list`) holds one row per spool, plus a `refresh_spool_list()` helper that clears and rebuilds the list from `database.get_all_spools()` every time a spool is added. Display format: `"brand - material - color - remaining_weight_g / total_weight_g"`.
+
+**Bugs found and fixed by Mark this session** (via LSP/Ruff/Pyright errors and his own testing, not by being told the answer):
+- A missing argument in the `add_spool()` call inside `add_spool_clicked` — `material_input.value` was skipped entirely between brand and color.
+- Unclosed parentheses on a `ft.Text(...)`/`.append()` line, which cascaded into misleading errors on unrelated later lines — a repeat of a pattern from the previous session, correctly recognized this time.
+- `spool_list` was created and its contents updated correctly, but was never passed to `page.add()` — so nothing rendered even though the underlying logic worked. Diagnosed by comparing working vs. non-working code side by side, and by checking the database directly via the REPL to confirm the data layer was fine and isolate the bug to the display layer.
+
+Also learned that `ft.ElevatedButton`'s label parameter is `content`, not `text` — the LSP flagged the wrong usage, and the fix was found by checking the current official Flet docs (the API has changed across versions).
 
 ## Next steps
 
-1. Build an "Add Spool" form in the GUI (text input fields + a button) that calls `add_spool()`, replacing REPL-based inserts.
+1. Add Update (remaining weight) and Delete buttons to each row in the spool list, wired to `update_remaining_weight()` and `delete_spool()`.
 2. Commit and push.
