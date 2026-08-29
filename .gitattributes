@@ -1,0 +1,14 @@
+# Normalize all text files to LF in the repo, regardless of the OS that commits.
+# Prevents CRLF churn from the Windows machine / Nextcloud-synced working tree.
+* text=auto eol=lf
+
+# Explicitly binary — never touch line endings or try to diff as text.
+*.stl        binary
+*.3mf        binary
+*.gcode      binary
+*.bbsflmt    binary
+*.zip        binary
+*.jpg        binary
+*.jpeg       binary
+*.png        binary
+*.pdf        binary
