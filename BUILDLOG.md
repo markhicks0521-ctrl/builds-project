@@ -33,6 +33,16 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 ---
 
+## Filament Manager
+
+**Status:** Early development. Started 2026-08-28. Hand-written Python learning project — Claude Code is not writing the application code. Full detail in [`apps/filament-manager/README.md`](apps/filament-manager/README.md).
+
+`database.py` built and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, color, total_weight_g, remaining_weight_g), and `add_spool()` (parameterized `?` inserts). Verified end to end — `init_db()` created `filament.db`, then `add_spool("Bambu", "PLA", "Black", 1000, 1000)` from the REPL, row read back as `[(1, 'Bambu', 'PLA', 'Black', 1000.0, 1000.0)]`.
+
+**Next:** add `get_all_spools()`, `update_spool()`, `delete_spool()` to `database.py`; build the Flet GUI in `main.py`; then commit and push to GitHub.
+
+---
+
 ## Ammo Box — 9mm 50rd
 
 **Status:** Fresh start — all previous scad/stl/Fusion360 files deleted. Starting from a fit-verification test piece before building the full tray.
