@@ -8,6 +8,14 @@ def main(page: ft.Page):
     brand_input = ft.TextField(label="Brand")
     material_input = ft.TextField(label="Material")
     color_input = ft.TextField(label="color")
+    variant_input = ft.TextField(label="Variant (optional)")
+    spool_type_input = ft.Dropdown(
+        label="Spool Type",
+        options=[
+            ft.dropdown.Option("Spooled"),
+            ft.dropdown.Option("Refill"),
+        ],
+    )
     weight_input = ft.TextField(label="Total Weight (g)")
 
     spool_list = ft.Column()
@@ -27,13 +35,13 @@ def main(page: ft.Page):
 
             def make_update_handler(sid, field):
                 def handler(e):
-                    database.update_remaining_weight(sid, float(field.value))
+                    database.update_remaining_weight(sid, float(field.value.replace(",", "")))
                     refresh_spool_list()
                 return handler
 
             row = ft.Row(
                 controls=[
-                    ft.Text(f"{spool[1]} - {spool[2]} - {spool[3]} - {spool[5]}g / {spool[4]}g"),
+                    ft.Text(f"{spool[1]} - {spool[2]} - {spool[3]} - {spool[4]} - {spool[5]} - {spool[6]}g / {spool[7]}g"),
                     new_weight_input,
                     ft.ElevatedButton(content="Update", on_click=make_update_handler(spool_id, new_weight_input)),
                     ft.ElevatedButton(content="Delete", on_click=make_delete_handler(spool_id)),
@@ -46,19 +54,23 @@ def main(page: ft.Page):
         database.add_spool(
             brand_input.value,
             material_input.value,
+            variant_input.value,
             color_input.value,
-            float(weight_input.value),
-            float(weight_input.value),
+            spool_type_input.value,
+            float(weight_input.value.replace(",", "")),
+            float(weight_input.value.replace(",", "")),
         )
         brand_input.value = ""
         material_input.value = ""
+        variant_input.value = ""
         color_input.value = ""
+        spool_type_input.value = ""
         weight_input.value = ""
         refresh_spool_list()
 
     add_button = ft.ElevatedButton(content="Add Spool", on_click=add_spool_clicked)
 
-    page.add(brand_input, material_input, color_input, weight_input, add_button, spool_list)
+    page.add(brand_input, material_input, variant_input, color_input, spool_type_input, weight_input, add_button, spool_list)
 
     refresh_spool_list()
 

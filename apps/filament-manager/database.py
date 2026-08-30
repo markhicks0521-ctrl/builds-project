@@ -17,7 +17,9 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             brand TEXT NOT NULL,
             material TEXT NOT NULL,
+            variant TEXT,
             color TEXT NOT NULL,
+            spool_type TEXT NOT NULL,
             total_weight_g REAL NOT NULL,
             remaining_weight_g REAL NOT NULL
         )
@@ -25,14 +27,14 @@ def init_db():
     conn.commit()
     conn.close()
 
-def add_spool(brand, material, color, total_weight_g, remaining_weight_g):
+def add_spool(brand, material, variant, color, spool_type, total_weight_g, remaining_weight_g):
     """Insert a new spool record into database."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO spools (brand, material, color, total_weight_g, remaining_weight_g)
-        VALUES (?, ?, ?, ?, ?)
-    """, (brand, material, color, total_weight_g, remaining_weight_g))
+        INSERT INTO spools (brand, material, variant, color, spool_type, total_weight_g, remaining_weight_g)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (brand, material, variant, color, spool_type, total_weight_g, remaining_weight_g))
     conn.commit()
     conn.close()
 
@@ -40,7 +42,7 @@ def get_all_spools():
     """Retrieve every spool record from the database."""
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM spools")
+    cursor.execute("SELECT * FROM spools ORDER BY brand, material")
     rows = cursor.fetchall()
     conn.close()
     return rows

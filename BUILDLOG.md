@@ -37,13 +37,17 @@ At the end of every session, edit this file in place — add, remove, or reword 
 
 **Status:** **Milestone (2026-08-29) — full CRUD working end to end through the GUI**, no REPL needed for day-to-day use. Started 2026-08-28. Hand-written Python learning project — Claude Code is not writing the application code. Full detail in [`apps/filament-manager/README.md`](apps/filament-manager/README.md).
 
-`database.py`'s full CRUD set is complete and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, color, total_weight_g, remaining_weight_g), `add_spool()`, `get_all_spools()`, `update_remaining_weight(spool_id, new_weight)`, and `delete_spool(spool_id)` (the latter two use `WHERE` clauses to target one row).
+`database.py`'s full CRUD set is complete and tested: `get_connection()`, `init_db()` (creates the `spools` table — id, brand, material, variant, color, spool_type, total_weight_g, remaining_weight_g), `add_spool()`, `get_all_spools()` (now `ORDER BY brand, material`), `update_remaining_weight(spool_id, new_weight)`, and `delete_spool(spool_id)` (the latter two use `WHERE` clauses to target one row).
 
 `main.py`: Add Spool form (`TextField`s + `ElevatedButton` → `add_spool()`), and each row in the live spool list now has its own "New weight" field, Update button, and Delete button, wired to `update_remaining_weight()`/`delete_spool()` — all four CRUD ops now driven from the GUI. Update/Delete use Python closures (`make_delete_handler(sid)`, `make_update_handler(sid, field)`) created once per row in the refresh loop, so each button independently remembers its own spool's id. Verified with multi-row testing — updating/deleting one spool leaves all other rows untouched.
 
 Two more bugs self-diagnosed and fixed by Mark via LSP errors: an Update field/button built but never added to the row's controls (same category as an earlier "widget never added to the page" bug, caught faster this time), and a stray paren inside a variable name (`new_weight_input` → `new)weight_input`) that cascaded into ~13 lines of syntax errors, correctly recognized as one small root cause. Mark says closures aren't fully clicking conceptually yet despite two correct implementations — expected, revisit/reinforce in future sessions rather than assuming it's settled.
 
-**Next (not yet decided):** clean up Flet deprecation warnings (`ft.app()` → `ft.run()`, `ElevatedButton` → `Button`), add input validation for non-numeric weights, visual polish, or call this v1 complete and move phases.
+**Schema + UX update:** added `variant` (optional) and `spool_type` (NOT NULL, "Spooled"/"Refill") columns to `spools`, mid-table — since only test data existed, `filament.db` was deleted/recreated rather than migrated (future schema changes on real data must use `ALTER TABLE`). Add Spool form gained a `variant_input` field and a `spool_type_input` `Dropdown` (first `ft.Dropdown` use in the project). Mark independently remapped every `spool[]` tuple index shifted by the two new mid-table columns, across the display string and both closures. Also fixed a crash on comma-formatted weight input (e.g. `"2,000"`) via `.replace(",", "")` before `float()`, in both weight fields.
+
+Mark has started entering his real inventory (~52 spools, ~5 brands, spanning PLA Basic/Silk/Tri-Color/Dual-Color/Glow, PETG HF/Translucent/CF, ABS, ABS GF, ASA, TPU) using the finished form.
+
+**Next (not yet decided):** clean up Flet deprecation warnings (`ft.app()` → `ft.run()`, `ElevatedButton` → `Button`), further input validation, visual polish, or call this v1 complete and move phases.
 
 ---
 
